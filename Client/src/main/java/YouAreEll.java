@@ -1,3 +1,4 @@
+import com.fasterxml.jackson.databind.ObjectMapper;
 import okhttp3.*;
 
 import java.io.IOException;
@@ -35,7 +36,7 @@ public class YouAreEll {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        } else if (method.equals("PUT")) {
+        } else if (method.equals("POST")) {
             RequestBody body = RequestBody.create(JSON, jpayload);
             Request request = new Request.Builder().url(myURL).post(body).build();
 
@@ -45,6 +46,10 @@ public class YouAreEll {
                 e.printStackTrace();
             }
         }
+//        else if (method.equals("PUT")) {
+//            ObjectMapper objectMapper = new ObjectMapper();
+//
+//        }
         return "nothing";
     }
 }

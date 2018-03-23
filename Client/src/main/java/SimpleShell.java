@@ -11,6 +11,14 @@ public class SimpleShell {
 
 
     public static void prettyPrint(String output) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            Object json = objectMapper.readValue(output, Object.class);
+            String prettyPrint = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(json);
+            System.out.println(prettyPrint);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         // yep, make an effort to format things nicely, eh?
         System.out.println(output);
     }
@@ -21,6 +29,7 @@ public class SimpleShell {
         BufferedReader console = new BufferedReader
                 (new InputStreamReader(System.in));
 
+        ObjectMapper mapper = new ObjectMapper();
         ProcessBuilder pb = new ProcessBuilder();
         List<String> history = new ArrayList<String>();
         int index = 0;
@@ -61,9 +70,17 @@ public class SimpleShell {
                 // Specific Commands.
 
                 // ids
-                if (list.contains("ids")) {
+                if (list.contains("ids") && list.size() == 1) {
                     String results = webber.get_ids();
                     SimpleShell.prettyPrint(results);
+                    continue;
+                }
+                if (list.contains("ids") && list.size() == 3){
+                    String name = list.get(1); //name
+                    String github = list.get(2);
+                    ID userID = new ID(name,github);
+                    String newUserInfo = mapper.writeValueAsString(userID);
+                    webber.MakeURLCall("/ids", "POST", newUserInfo);
                     continue;
                 }
 

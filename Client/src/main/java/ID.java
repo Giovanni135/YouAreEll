@@ -1,11 +1,14 @@
 public class ID {
 
-    public ID(String uderID, String name, String gitHub) {
+    private String name;
+    private String github;
+
+    public ID(String userID, String name, String github) {
         this.userID = userID;
         this.name = name;
         this.github = github;
     }
-    public ID(String nme, String github) {
+    public ID(String name, String github) {
         this.name = name;
         this.github = github;
     }
@@ -35,9 +38,6 @@ public class ID {
     public void setGithub(String github) {
         this.github = github;
     }
-
-    private String name;
-    private String github;
 
     @Override
     public String toString() {
