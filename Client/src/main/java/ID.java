@@ -38,4 +38,13 @@ public class ID {
 
     private String name;
     private String github;
+
+    @Override
+    public String toString() {
+        return "Id{" +
+                "id='" + this.userID + '\'' +
+                ", name='" + this.name + '\'' +
+                ", gitHubId='" + this.github + '\'' +
+                '}';
+    }
 }

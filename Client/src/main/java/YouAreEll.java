@@ -1,6 +1,13 @@
-public class YouAreEll {
+import okhttp3.*;
 
-    YouAreEll() {
+import java.io.IOException;
+
+
+
+public class YouAreEll {
+    private static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+    OkHttpClient client = new OkHttpClient();
+            YouAreEll() {
     }
 
     public static void main(String[] args) {
@@ -18,6 +25,26 @@ public class YouAreEll {
     }
 
     public String MakeURLCall(String mainurl, String method, String jpayload) {
-        return "nada";
+        String myURL = "http://zipcode.rocks:8085" + mainurl;
+        OkHttpClient client = new OkHttpClient();
+
+        if(method.equals("GET")) {
+            Request request = new Request.Builder().url(myURL).build();
+            try (Response response = client.newCall(request).execute()) {
+                return response.body().string();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else if (method.equals("PUT")) {
+            RequestBody body = RequestBody.create(JSON, jpayload);
+            Request request = new Request.Builder().url(myURL).post(body).build();
+
+            try (Response response = client.newCall(request).execute()) {
+                return response.body().string();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return "nothing";
     }
 }
